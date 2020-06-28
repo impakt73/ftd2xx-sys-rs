@@ -7,7 +7,11 @@ fn main() {
     let lib_path = PathBuf::from("lib");
     let out_path = PathBuf::from(env::var("OUT_DIR").unwrap());
 
-    let lib_name = "ftd2xx.lib";
+    let lib_name = if cfg!(target_os = "linux") {
+        "libftd2xx.a"
+    } else {
+        "ftd2xx.lib"
+    };
     println!(
         "cargo:rustc-link-lib={}",
         Path::new(lib_name).file_stem().unwrap().to_str().unwrap()
