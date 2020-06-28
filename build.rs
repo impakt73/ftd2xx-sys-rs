@@ -1,6 +1,5 @@
 use std::env;
 use std::fs;
-use std::path::Path;
 use std::path::PathBuf;
 
 fn main() {
@@ -12,20 +11,17 @@ fn main() {
     } else {
         "ftd2xx.lib"
     };
-    println!(
-        "cargo:rustc-link-lib={}",
-        Path::new(lib_name).file_stem().unwrap().to_str().unwrap()
-    );
-    println!(
-        "cargo:rustc-link-search=native={}",
-        out_path.to_str().unwrap()
-    );
-
     fs::copy(
         lib_path.join(lib_name).to_str().unwrap(),
         out_path.join(lib_name).to_str().unwrap(),
     )
     .expect("Failed to copy native lib to output directory");
+
+    println!("cargo:rustc-link-lib=static=ftd2xx");
+    println!(
+        "cargo:rustc-link-search=native={}",
+        out_path.to_str().unwrap()
+    );
 
     println!("cargo:rerun-if-changed=lib/ftd2xx.h");
 
