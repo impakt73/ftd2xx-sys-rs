@@ -5,10 +5,8 @@ authors = ["Gregory Mitrano <gregory.mitrano@gmail.com>"]
 edition = "2018"
 links = "ftd2xx"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[dependencies]
-
+[features]
+gen-bindings = ["bindgen"]
 
 [build-dependencies]
-bindgen = "0.54.0"
+bindgen = { version = "0.54.0", optional = true }
